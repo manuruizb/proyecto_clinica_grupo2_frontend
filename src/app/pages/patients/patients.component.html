@@ -1,0 +1,10 @@
+<side-bar/>
+<div class="container">
+    <h1>Pacientes</h1>
+
+    <ol-datatable [JSONdata]="JSONdata" [dataValues]="dataValues" [itemsPerPage]="$any(itemsPerPage)"
+        [totalItems]="totalItems" keyValue="idServicioSalud" paginatePosition="bottom"
+        (pageChange)="onPageChanged($event)" (onSearch)="getAll(1,$event)">
+    </ol-datatable>
+
+</div>
