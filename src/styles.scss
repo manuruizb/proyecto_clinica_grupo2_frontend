@@ -345,3 +345,7 @@ p {
 *::-webkit-scrollbar-thumb:active {
     background-color: var(--LabelBackgroundColor);
 }
+
+.bs-datepicker{
+    background: var(--bodyBackgroundColor) !important;
+}

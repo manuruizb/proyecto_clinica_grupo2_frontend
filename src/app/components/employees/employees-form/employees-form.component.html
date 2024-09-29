@@ -51,7 +51,8 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <input type="text" class="form__input" formControlName="birthdate" placeholder="Fecha nacimiento">
+                    <input type="text" class="form__input" formControlName="birthdate" placeholder="Fecha nacimiento"
+                        bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
                 </div>
             </div>
         </div>

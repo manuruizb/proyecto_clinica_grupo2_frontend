@@ -4,12 +4,18 @@ import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeesService } from '../../../services/employees.service';
 import { firstValueFrom } from 'rxjs';
 import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-employees-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    CommonModule,
+    ReactiveFormsModule,
+    BsDatepickerModule,
+    
   ],
   templateUrl: './employees-form.component.html',
   styleUrl: './employees-form.component.scss'
