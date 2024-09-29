@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --baseColor: #606468;
+    --anchorColor: #eee;
+    --iconFill: var(--baseColor);
+    --htmlFontSize: 100%;
+
+    --bodyBackgroundColor: #2c3338;
+    --bodyColor: var(--baseColor);
+    --bodyFontFamily: "Open Sans";
+    --bodyFontFamilyFallback: sans-serif;
+    --bodyFontSize: 0.875rem;
+    --bodyFontWeight: 400;
+    --bodyLineHeight: 1.5;
+    --formGap: 0.875rem;
+
+    --BorderRadus: 0.25rem;
+    --Color: #eee;
+    --textColor: #c3c3c3;
+
+    --InputBackgroundColor: #3b4148;
+    --InputHoverBackgroundColor: #434a52;
+
+    --LabelBackgroundColor: #363b41;
+
+    --SubmitBackgroundColor: #41c26c;
+    --SubmitColor: #eee;
+    --SubmitHoverBackgroundColor: #349c57;
+}
+
+body {
+    background-color: #2c3338 !important;
+    background-color: var(--bodyBackgroundColor) !important;
+    color: #606468 !important;
+    color: var(--bodyColor) !important;
+    font-family: "Open Sans", sans-serif !important;
+    font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback) !important;
+    font-size: 0.875rem !important;
+    font-size: var(--bodyFontSize) !important;
+    font-weight: 400 !important;
+    font-weight: var(--bodyFontWeight) !important;
+    line-height: 1.5 !important;
+    line-height: var(--bodyLineHeight) !important;
+    margin: 0 !important;
+    min-height: calc(100vh - 80px) !important;
+    margin-top: 80px !important;
+}
+

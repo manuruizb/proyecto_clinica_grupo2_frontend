@@ -1,0 +1,26 @@
+<nav class="nav-bar">
+    <div class="hamburger" (click)="toggle()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="profile">
+        <div class="circle">
+            <img src="assets/perfil.jpg" alt="profile" class="avatar">
+        </div>
+    </div>
+</nav>
+
+<nav class="side-bar" [ngClass]="{'active': isActive}">
+    <ul class="menu">
+        @for (item of menuList; track $index) {
+        <li class="item">
+            <a [routerLink]="item.path">
+                <div class="icon"><i [class]="item.icon"></i></div>
+                <div class="text">{{item.title}}</div>
+            </a>
+        </li>
+        }
+    </ul>
+    <div class="logout">
+        <span><i class="fa-solid fa-power-off"></i>Cerrar sesión</span>
+    </div>
+</nav>

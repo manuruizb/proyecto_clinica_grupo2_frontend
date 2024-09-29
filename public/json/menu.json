@@ -1,0 +1,32 @@
+[
+    {
+        "icon": "fa-solid fa-user-injured",
+        "title": "Pacientes",
+        "path": "/pacientes"
+    },
+    {
+        "icon": "fa-regular fa-calendar-check",
+        "title": "Citas",
+        "path": "/citas"
+    },
+    {
+        "icon": "fa-solid fa-money-bill-trend-up",
+        "title": "Facturas",
+        "path": "/facturas"
+    },
+    {
+        "icon": "fa-solid fa-suitcase-medical",
+        "title": "Inventario Medicamentos",
+        "path": "/inventario-medicamentos"
+    },
+    {
+        "icon": "fa-solid fa-laptop-medical",
+        "title": "Historia Clínica",
+        "path": "/historia-clinica"
+    },
+    {
+        "icon": "fa-solid fa-gear",
+        "title": "Configuración",
+        "path": "/configuracion"
+    }
+]
