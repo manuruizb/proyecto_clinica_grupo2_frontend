@@ -4,7 +4,7 @@ export interface Employees{
     lastName: string;
     email: string;
     phone: string;
-    birthdate: Date;
+    birthdate: string;
     address: string;
     rol: string;
     username: string;

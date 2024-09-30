@@ -1,5 +1,5 @@
 <div class="offcanvas-header">
-    <h4 class="offcanvas-title text-light">{{isEditable ? 'Editar': 'Crear'}} empleado</h4>
+    <h4 class="offcanvas-title text-light">{{isEditable ? 'Editar': 'Crear'}} paciente</h4>
     <button type="button" class="btn-close" aria-label="Close"
         (click)="activeOffcanvas.dismiss('Cross click')"></button>
 </div>
@@ -51,7 +51,7 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <input type="text" class="form__input" formControlName="birthdate" placeholder="Fecha nacimiento"
+                    <input type="text" class="form__input" formControlName="birthDate" placeholder="Fecha nacimiento"
                         bsDatepicker [bsConfig]="bsConfig">
                 </div>
             </div>
@@ -72,15 +72,11 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <select class="form__input" formControlName="rol">
-                        <option value="">Seleccione el Cargo</option>
-                        <option value="MED">Medico(a)</option>
-                        <option value="ENF">Enfermero(a)</option>
-                        <option value="ADM">Administrativo</option>
-                        <option value="LIM">Limpieza</option>
-                        <option value="REG">Regente de farmacia</option>
-                        <option value="FIS">Fisioterapeuta</option>
-                        <option value="OTR">Otros</option>
+                    <select class="form__input" formControlName="gender">
+                        <option value="">Seleccione el género</option>
+                        <option value="F">Femenino</option>
+                        <option value="M">Masculino</option>
+                        <option value="O">Otro</option>
                     </select>
                 </div>
             </div>
@@ -91,22 +87,40 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <input type="text" class="form__input" formControlName="username" placeholder="Nombre usuario">
+                    <input type="text" class="form__input" formControlName="emergency_contact" placeholder="Contacto de emergencia">
                 </div>
             </div>
         </div>
-        @if(!isEditable){
         <div class="row mb-1">
             <div class="col-12 ps-4 text-light">
                 <div class="form__field">
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <input type="password" class="form__input" formControlName="password" placeholder="Contraseña">
+                    <input type="text" class="form__input" formControlName="emergency_contact_phone" placeholder="Teléfono contacto emergencia" (keypress)="helpers.onlyNumbers($event)">
                 </div>
             </div>
         </div>
-        }
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="insurance_entity" placeholder="Compañía de seguros">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="policy_number" placeholder="Número póliza" (keypress)="helpers.onlyNumbers($event)">
+                </div>
+            </div>
+        </div>
         <div class="offcanvas-footer">
             <button type="submit" class="btn btn-sm btn-primary">
                 <i class="fa-regular fa-floppy-disk"></i>&nbsp;

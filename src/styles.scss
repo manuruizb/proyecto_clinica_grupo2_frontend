@@ -26,21 +26,37 @@
     --SubmitColor: #eee;
     --SubmitHoverBackgroundColor: #349c57;
 
-    .btn-primary{
-        --bs-btn-bg: #41c26c ;
+    .btn-primary {
+        --bs-btn-bg: #41c26c;
         --bs-btn-border-color: #41c26c;
         --bs-btn-hover-bg: #349c57;
         --bs-btn-hover-border-color: #349c57;
+        --bs-btn-active-bg: #41c26c;
+        --bs-btn-active-border-color: #41c26c;
     }
 
-    .offcanvas{
+    .offcanvas {
         --bs-offcanvas-bg: #2c3338;
     }
 
-    .btn-close{
+    .btn-close {
         --bs-btn-close-color: #eee !important;
     }
-    
+
+    .pagination {
+        --bs-pagination-bg: #3b4148;
+        --bs-pagination-border-color: #2c3338;
+        --bs-pagination-active-color: #fff;
+        --bs-pagination-active-bg: #41c26c;
+        --bs-pagination-active-border-color: #41c26c;
+        --bs-pagination-disabled-color: rgb(242 255 255);
+        --bs-pagination-disabled-bg: #363b41;
+        --bs-pagination-disabled-border-color: #363b41;
+        --bs-pagination-color: #eee;
+        --bs-pagination-hover-bg: var(--bodyBackgroundColor);
+        --bs-pagination-hover-border-color: var(--bodyBackgroundColor);
+        --bs-pagination-hover-color: #eee;
+    }
 }
 
 body {
@@ -61,42 +77,45 @@ body {
     margin-top: 80px !important;
 }
 
-.header{
+.header {
     width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 50px;
-    .buttons{
+
+    .buttons {
         margin-left: auto;
-        button{
+
+        button {
             margin-left: 15px;
         }
     }
 }
 
-.action-column{
+.action-column {
     min-width: 20px;
     margin: 0;
     display: flex;
     justify-content: flex-end;
-    button{
+
+    button {
         margin: 5px;
-        
+
     }
 }
 
-div:where(.swal2-container).swal2-center>.swal2-popup{
+div:where(.swal2-container).swal2-center>.swal2-popup {
     background-color: var(--bodyBackgroundColor) !important;
 }
 
-div:where(.swal2-container) .swal2-html-container{
+div:where(.swal2-container) .swal2-html-container {
     color: #eee !important;
 }
 
-div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
     background-color: var(--SubmitBackgroundColor) !important;
 }
- 
+
 
 /* config.css */
 
@@ -182,7 +201,8 @@ a:hover {
 
 /* modules/form.css */
 
-input, select {
+input,
+select {
     background-image: none;
     border: 0;
     color: inherit;
@@ -296,12 +316,12 @@ p {
     text-align: center;
 }
 
-.offcanvas-body{
+.offcanvas-body {
     overflow-y: auto;
     height: calc(100vh - 130px);
 }
 
-.offcanvas-footer{
+.offcanvas-footer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -335,7 +355,8 @@ p {
 
 *::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: var(--bodyBackgroundColor);;
+    background-color: var(--bodyBackgroundColor);
+    ;
 }
 
 *::-webkit-scrollbar-thumb:hover {
@@ -346,6 +367,6 @@ p {
     background-color: var(--LabelBackgroundColor);
 }
 
-.bs-datepicker{
+.bs-datepicker {
     background: var(--bodyBackgroundColor) !important;
 }

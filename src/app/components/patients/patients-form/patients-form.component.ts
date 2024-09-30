@@ -1,33 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { EmployeesService } from '../../../services/employees.service';
-import { firstValueFrom } from 'rxjs';
-import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommonModule } from '@angular/common';
+import { PatientsService } from '../../../services/patients.service';
+import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
+import { firstValueFrom } from 'rxjs';
 import { Helpers } from '../../../libs/helpers';
 
 @Component({
-  selector: 'app-employees-form',
+  selector: 'app-patients-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     BsDatepickerModule,
-    
   ],
-  templateUrl: './employees-form.component.html',
-  styleUrl: './employees-form.component.scss'
+  templateUrl: './patients-form.component.html',
+  styleUrl: './patients-form.component.scss'
 })
-export class EmployeesFormComponent implements OnInit {
+export class PatientsFormComponent implements OnInit {
 
   activeOffcanvas = inject(NgbActiveOffcanvas);
   @Input() isEditable: boolean = false;
   @Input() id: number | any;
   @Input() data: any;
   helpers = Helpers;
+
 
   bsConfig?: Partial<BsDatepickerConfig>;
 
@@ -37,35 +36,39 @@ export class EmployeesFormComponent implements OnInit {
     lastName: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl('', Validators.required),
-    birthdate: new FormControl('', Validators.required),
+    birthDate: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
-    rol: new FormControl('', Validators.required),
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    gender: new FormControl('', Validators.required),
+    emergency_contact: new FormControl('', Validators.required),
+    emergency_contact_phone: new FormControl('', Validators.required),
+    insurance_entity: new FormControl('', Validators.required),
+    policy_number: new FormControl('', Validators.required)
   });
 
 
-  constructor(private employeesService: EmployeesService) { 
+  constructor(private patientsService: PatientsService) {
     this.bsConfig = Object.assign({}, { maxDate: new Date(), dateInputFormat: 'YYYY-MM-DD' });
   }
 
 
   ngOnInit(): void {
     if (this.isEditable) {
-      this.customForm.get('password')?.removeValidators(Validators.required);
       this.customForm.patchValue({
         firstName: this.data.firstName,
         lastName: this.data.lastName,
         email: this.data.email,
         phone: this.data.phone,
-        birthdate: this.data.birthdate,
+        birthDate: this.data.birthDate,
         address: this.data.address,
-        rol: this.data.rol,
-        username: this.data.username,
+        gender: this.data.gender,
+        emergency_contact: this.data.emergency_contact,
+        emergency_contact_phone: this.data.emergency_contact_phone,
+        insurance_entity: this.data.insurance_entity,
+        policy_number: this.data.policy_number,
       });
     }
-
   }
+
 
   async onSave() {
     if (this.customForm.invalid) {
@@ -75,20 +78,20 @@ export class EmployeesFormComponent implements OnInit {
 
     const obj = this.customForm.getRawValue();
 
-    if(typeof obj.birthdate === 'object'){
-      obj.birthdate = obj.birthdate.toISOString().split('T')[0];
+    if (typeof obj.birthDate === 'object') {
+      obj.birthDate = obj.birthDate.toISOString().split('T')[0];
     }
 
     if (this.isEditable) {
-      delete obj.password;
-      await firstValueFrom(this.employeesService.patch(obj, this.id));
+      await firstValueFrom(this.patientsService.update(obj, this.id));
     } else {
-      
-      await firstValueFrom(this.employeesService.create(obj));
+
+      await firstValueFrom(this.patientsService.create(obj));
     }
 
     Dialog.show('Operación realizada exitosamente.', Dialogtype.success);
 
     this.activeOffcanvas.dismiss('Closed');
   }
+
 }

@@ -11,8 +11,8 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
 import Dialogtype, { Dialog } from '../libs/dialog.lib';
-import { LoaderService } from '../services/loader.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 
 @Injectable({
     providedIn: 'root'
@@ -62,7 +62,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 let data: any = {};
                 data = {
-                    reason: error && error.error && error.error.reason ? error.error.reason : '',
+                    reason: JSON.stringify(error.error),
                     status: error.status,
                     message: error && error.error && error.error.data ? error.error.data.error : error.message,
                     exceptionMessage: error && error.error ? error.error.exceptionMessage : error.message,
@@ -72,7 +72,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (data["status"] != "" && data["status"] == "500") {
 
                     this.loaderService.hide();
-
                     Dialog.show('Ha ocurrido un error con el servicio', Dialogtype.error);
                     return throwError('error-->>>' + error);
 
@@ -82,14 +81,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     this.router.navigate(['/']);
                     return throwError('error-->>>' + error);
                 }
-                else if (data["status"] != "" && data["status"] == "403") {
-                    this.loaderService.hide();
-                    this.router.navigate(['/']);
-                    return throwError('error-->>>' + error);
-                }
                 else {
                     this.loaderService.hide();
-                    if (data.message) {
+                    if (data.reason) {
+                        Dialog.show(data.reason, Dialogtype.warning);
+                    }else{
                         Dialog.show(data.message, Dialogtype.warning);
                     }
 

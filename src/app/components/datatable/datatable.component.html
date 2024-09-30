@@ -18,7 +18,7 @@
                     </div>
                 </td>
             </tr>
-            <tr *ngFor="let item of JSONdata ; index as i">
+            <tr *ngFor="let item of JSONdata.slice((currentPage - 1) * itemsPerPage, (currentPage) * itemsPerPage) ; index as i">
                 <td *ngFor="let values of dataValues;index as j;">
                     <div *ngIf="values.id != null && values.boolean">
                         {{ item['' + values.id + ''] === true ? 'Activo' : 'Inactivo' }}
@@ -50,8 +50,7 @@
     </table>
 </div>
 
-<div class="paginator" *ngIf="paginatePosition == 'bottom' && (totalItems > itemsPerPage)">
-    <p class="me-5 pages-info">{{((currentPage -1) * itemsPerPage) + JSONdata.length }} de {{totalItems }} Registros</p>
+<div class="paginator" *ngIf="(totalItems > itemsPerPage)">
     <pagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10" [(ngModel)]="currentPage"
         previousText="&lsaquo;" nextText="&rsaquo;" (pageChanged)="pageChanged($event)">
     </pagination>

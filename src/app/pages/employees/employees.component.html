@@ -9,8 +9,7 @@
 
 
     <ol-datatable [JSONdata]="JSONdata" [dataValues]="dataValues" [itemsPerPage]="$any(itemsPerPage)"
-        [totalItems]="totalItems" keyValue="id" paginatePosition="bottom"
-        (pageChange)="onPageChanged($event)" (onSearch)="getList()">
+        [totalItems]="totalItems" keyValue="id" paginatePosition="bottom">
     </ol-datatable>
 
     <ng-template #actionsTemplate let-identifier="keyValue" let-data="data">

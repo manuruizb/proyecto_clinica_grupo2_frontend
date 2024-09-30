@@ -1,5 +1,4 @@
 import { Component, inject, Input } from '@angular/core';
-import { Employees } from '../../../models/employees-model';
 import { NgbActiveOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

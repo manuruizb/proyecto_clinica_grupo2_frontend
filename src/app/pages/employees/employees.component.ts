@@ -7,9 +7,9 @@ import { firstValueFrom } from 'rxjs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import Dialogtype, { Dialog } from '../../libs/dialog.lib';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from '../login/login.component';
 import { EmployeesViewComponent } from '../../components/employees/employees-view/employees-view.component';
 import { EmployeesFormComponent } from '../../components/employees/employees-form/employees-form.component';
+
 
 @Component({
   selector: 'app-employees',
@@ -54,12 +54,10 @@ export class EmployeesComponent implements OnInit {
   async getList() {
 
     this.JSONdata = await firstValueFrom(this.employeeService.getList());
-
+    this.totalItems = this.JSONdata.length;
   }
 
-  onPageChanged(page: number) {
-    this.getList();
-  }
+
 
   onDelete(id: number) {
     Dialog.show('¿Estás seguro que deseas eliminar este registro?', Dialogtype.question).subscribe(yes => {
