@@ -1,0 +1,117 @@
+<div class="offcanvas-header">
+    <h4 class="offcanvas-title text-light">{{isEditable ? 'Editar': 'Crear'}} empleado</h4>
+    <button type="button" class="btn-close" aria-label="Close"
+        (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<div class="offcanvas-body">
+    <form [formGroup]="customForm" class="form login" (ngSubmit)="onSave()">
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="firstName" placeholder="Nombres">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="lastName" placeholder="Apellidos">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="email" placeholder="Correo">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="phone" placeholder="Celular" (keypress)="helpers.onlyNumbers($event)">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="birthdate" placeholder="Fecha nacimiento"
+                        bsDatepicker [bsConfig]="bsConfig">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="address" placeholder="Dirección">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <select class="form__input" formControlName="rol">
+                        <option value="">Seleccione el Cargo</option>
+                        <option value="MED">Medico(a)</option>
+                        <option value="ENF">Enfermero(a)</option>
+                        <option value="ADM">Administrativo</option>
+                        <option value="LIM">Limpieza</option>
+                        <option value="REG">Regente de farmacia</option>
+                        <option value="FIS">Fisioterapeuta</option>
+                        <option value="OTR">Otros</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="username" placeholder="Nombre usuario">
+                </div>
+            </div>
+        </div>
+        @if(!isEditable){
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="password" class="form__input" formControlName="password" placeholder="Contraseña">
+                </div>
+            </div>
+        </div>
+        }
+        <div class="offcanvas-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa-regular fa-floppy-disk"></i>&nbsp;
+                Guardar
+            </button>
+        </div>
+    </form>
+</div>

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { firstValueFrom } from 'rxjs';
-import { Menu } from '../../models/menu';
+import { Menu } from '../../models/menu-model';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
