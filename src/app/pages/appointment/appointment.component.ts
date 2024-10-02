@@ -103,5 +103,32 @@ export class AppointmentComponent implements OnInit {
     this.searcherText = searcherText;
   }
 
+  async getPDFAll() {
+
+    let blob = await firstValueFrom(this.appointmentService.getPDFAll());
+    this.exportToPDF('ListaCitas.pdf', blob);
+  }
+
+  async getPDFById(id: number, data: Appointment) {
+
+    let blob = await firstValueFrom(this.appointmentService.getPDFById(id));
+    this.exportToPDF(`${data.patientName}.pdf`, blob);
+  }
+
+
+  async exportToPDF(fileName: string, blob: Blob) {
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
 
 }
