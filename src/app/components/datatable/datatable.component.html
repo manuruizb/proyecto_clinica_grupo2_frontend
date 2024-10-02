@@ -14,7 +14,7 @@
                 <td [attr.colspan]="dataValues.length">
                     <div class="form-icon">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="form-control" [placeholder]="filterPlaceHolder" [(ngModel)]="searcherText" (keydown.enter)="search()" (blur)="search()">
+                        <input type="text" class="form-control" [placeholder]="filterPlaceHolder" [(ngModel)]="searcherText" (keyup)="search()" (blur)="search()">
                     </div>
                 </td>
             </tr>

@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { AppointmentViewComponent } from '../../components/appointment/appointment-view/appointment-view.component';
 import { AppointmentFormComponent } from '../../components/appointment/appointment-form/appointment-form.component';
 import Dialogtype, { Dialog } from '../../libs/dialog.lib';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-appointment',
@@ -16,7 +17,8 @@ import Dialogtype, { Dialog } from '../../libs/dialog.lib';
   imports: [
     SideBarComponent,
     DatatableComponent,
-    TooltipModule
+    TooltipModule,
+    FilterPipe
   ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss'
@@ -33,6 +35,7 @@ export class AppointmentComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number = 1;
 
+  searcherText: string = '';
 
   constructor(private appointmentService: AppointmentService) { }
 
@@ -95,6 +98,10 @@ export class AppointmentComponent implements OnInit {
       this.getList();
     });
 	}
+
+  onSearch(searcherText: string) {
+    this.searcherText = searcherText;
+  }
 
 
 }

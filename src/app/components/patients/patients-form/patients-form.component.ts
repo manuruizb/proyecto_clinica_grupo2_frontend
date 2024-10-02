@@ -29,6 +29,7 @@ export class PatientsFormComponent implements OnInit {
 
 
   bsConfig?: Partial<BsDatepickerConfig>;
+  bsConfigPolicy?: Partial<BsDatepickerConfig>;
 
   customForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -42,12 +43,17 @@ export class PatientsFormComponent implements OnInit {
     emergency_contact: new FormControl('', Validators.required),
     emergency_contact_phone: new FormControl('', Validators.required),
     insurance_entity: new FormControl('', Validators.required),
-    policy_number: new FormControl('', Validators.required)
+    policy_number: new FormControl('', Validators.required),
+    Policy_state: new FormControl(false),
+    policy_validity: new FormControl('', Validators.required),
+    Cedula: new FormControl('', Validators.required)
+
   });
 
 
   constructor(private patientsService: PatientsService) {
-    this.bsConfig = Object.assign({}, { maxDate: new Date(), dateInputFormat: 'YYYY-MM-DD' });
+    this.bsConfig = Object.assign({}, { maxDate: new Date(), dateInputFormat: 'YYYY-MM-DD', adaptivePosition: true });
+    this.bsConfigPolicy = Object.assign({}, {  dateInputFormat: 'YYYY-MM-DD', adaptivePosition: true });
   }
 
 
@@ -65,6 +71,9 @@ export class PatientsFormComponent implements OnInit {
         emergency_contact_phone: this.data.emergency_contact_phone,
         insurance_entity: this.data.insurance_entity,
         policy_number: this.data.policy_number,
+        Policy_state: this.data.Policy_state,
+        policy_validity: this.data.policy_validity,
+        Cedula: this.data.Cedula,
       });
     }
   }
@@ -80,6 +89,10 @@ export class PatientsFormComponent implements OnInit {
 
     if (typeof obj.birthDate === 'object') {
       obj.birthDate = obj.birthDate.toISOString().split('T')[0];
+    }
+
+    if (typeof obj.policy_validity === 'object') {
+      obj.policy_validity = obj.policy_validity.toISOString().split('T')[0];
     }
 
     if (this.isEditable) {

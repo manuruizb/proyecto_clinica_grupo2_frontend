@@ -21,7 +21,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-12 ps-4 text-light">
-            <label class="me-2 "><strong>Número documento:</strong></label>
+            <label class="me-2 "><strong>Número documento:</strong></label>{{data.Cedula}}
         </div>
     </div>
     <div class="row mb-1">
@@ -71,12 +71,12 @@
     </div>
     <div class="row mb-1">
         <div class="col-12 ps-4 text-light">
-            <label class="me-2 "><strong>Estado de póliza:</strong></label>
+            <label class="me-2 "><strong>Estado de póliza:</strong></label>{{data.Policy_state ? 'Activa' : 'Inactiva'}}
         </div>
     </div>
     <div class="row mb-1">
         <div class="col-12 ps-4 text-light">
-            <label class="me-2 "><strong>Vigencia de póliza:</strong></label>
+            <label class="me-2 "><strong>Vigencia de póliza:</strong></label>{{data.policy_validity}}
         </div>
     </div>
 </div>

@@ -9,6 +9,7 @@ import Dialogtype, { Dialog } from '../../libs/dialog.lib';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeesViewComponent } from '../../components/employees/employees-view/employees-view.component';
 import { EmployeesFormComponent } from '../../components/employees/employees-form/employees-form.component';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { EmployeesFormComponent } from '../../components/employees/employees-for
   imports: [
     SideBarComponent,
     DatatableComponent,
-    TooltipModule
+    TooltipModule,
+    FilterPipe
   ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss'
@@ -33,6 +35,8 @@ export class EmployeesComponent implements OnInit {
   itemsPerPage: number = 5;
   totalItems: number = 0;
   currentPage: number = 1;
+
+  searcherText: string = '';
 
   constructor(private employeeService: EmployeesService) { }
 
@@ -62,7 +66,7 @@ export class EmployeesComponent implements OnInit {
   onDelete(id: number) {
     Dialog.show('¿Estás seguro que deseas eliminar este registro?', Dialogtype.question).subscribe(yes => {
       if (yes) {
-        this.employeeService.delete(id).subscribe(() =>{
+        this.employeeService.delete(id).subscribe(() => {
           Dialog.show('Registro eliminado correctamente', Dialogtype.success);
           this.getList();
         });
@@ -71,12 +75,12 @@ export class EmployeesComponent implements OnInit {
   }
 
   viewDetails(data: any) {
-		const modalRef = this.offcanvasService.open(EmployeesViewComponent, { position: 'end' });
+    const modalRef = this.offcanvasService.open(EmployeesViewComponent, { position: 'end' });
     modalRef.componentInstance.data = data;
-	}
+  }
 
   openModal(isEditable: boolean, id?: number, data?: any) {
-		const modalRef = this.offcanvasService.open(EmployeesFormComponent, { position: 'end' });
+    const modalRef = this.offcanvasService.open(EmployeesFormComponent, { position: 'end' });
     modalRef.componentInstance.isEditable = isEditable;
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.data = data;
@@ -86,6 +90,10 @@ export class EmployeesComponent implements OnInit {
     }).catch(() => {
       this.getList();
     });
-	}
+  }
+
+  onSearch(searcherText: string) {
+    this.searcherText = searcherText;
+  }
 
 }

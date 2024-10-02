@@ -11,4 +11,7 @@ export interface Patients {
     emergency_contact_phone: string;
     insurance_entity: string;
     policy_number: string;
+    Policy_state: boolean;
+    policy_validity: Date;
+    Cedula: string;
 }

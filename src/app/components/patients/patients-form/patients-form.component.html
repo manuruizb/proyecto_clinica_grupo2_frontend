@@ -31,6 +31,16 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
+                    <input type="text" class="form__input" formControlName="Cedula" placeholder="Número documento" (keypress)="helpers.onlyNumbers($event)">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
                     <input type="text" class="form__input" formControlName="email" placeholder="Correo">
                 </div>
             </div>
@@ -119,6 +129,27 @@
                     </label>
                     <input type="text" class="form__input" formControlName="policy_number" placeholder="Número póliza" (keypress)="helpers.onlyNumbers($event)">
                 </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form__field">
+                    <label>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </label>
+                    <input type="text" class="form__input" formControlName="policy_validity" placeholder="Vigencia póliza"
+                        bsDatepicker [bsConfig]="bsConfigPolicy">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 ps-4 text-light">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  formControlName="Policy_state">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Estado de la póliza
+                    </label>
+                  </div>
             </div>
         </div>
         <div class="offcanvas-footer">

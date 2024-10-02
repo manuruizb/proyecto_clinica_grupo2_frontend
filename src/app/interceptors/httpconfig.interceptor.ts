@@ -85,7 +85,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     this.loaderService.hide();
                     if (data.reason) {
                         Dialog.show(data.reason, Dialogtype.warning);
-                    }else{
+                    } else {
                         Dialog.show(data.message, Dialogtype.warning);
                     }
 

@@ -8,8 +8,8 @@
     </div>
 
 
-    <ol-datatable [JSONdata]="JSONdata" [dataValues]="dataValues" [itemsPerPage]="$any(itemsPerPage)"
-        [totalItems]="totalItems" keyValue="id" paginatePosition="bottom">
+    <ol-datatable [JSONdata]="JSONdata | filter: searcherText" [dataValues]="dataValues" [itemsPerPage]="$any(itemsPerPage)"
+        [totalItems]="(JSONdata | filter: searcherText).length" keyValue="id" paginatePosition="bottom" [filter]="true" (onSearch)="onSearch($event)">
     </ol-datatable>
 
     <ng-template #actionsTemplate let-identifier="keyValue" let-data="data">

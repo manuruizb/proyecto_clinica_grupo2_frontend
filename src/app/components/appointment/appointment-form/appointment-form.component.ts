@@ -10,6 +10,8 @@ import { PatientsService } from '../../../services/patients.service';
 import { firstValueFrom } from 'rxjs';
 import { Employees } from '../../../models/employees-model';
 import { Patients } from '../../../models/patients-model';
+import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @Component({
   selector: 'app-appointment-form',
@@ -18,6 +20,7 @@ import { Patients } from '../../../models/patients-model';
     CommonModule,
     ReactiveFormsModule,
     BsDatepickerModule,
+    TimepickerModule
   ],
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.scss'
@@ -39,7 +42,8 @@ export class AppointmentFormComponent implements OnInit {
     id: new FormControl(''),
     idPatient: new FormControl('', Validators.required),
     idEmployee: new FormControl('', Validators.required),
-    datetime: new FormControl('', [Validators.required, Validators.email]),
+    datetime: new FormControl('', Validators.required),
+    time: new FormControl('', Validators.required),
     reason: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required)
   });
@@ -50,11 +54,14 @@ export class AppointmentFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.isEditable) {
-  
+
+      console.log(this.data)
+
       this.customForm.patchValue({
         idPatient: this.data.idPatient,
         idEmployee: this.data.idEmployee,
         datetime: this.data.datetime,
+        time: this.data.datetime,
         reason: this.data.reason,
         status: this.data.status,
       });
@@ -76,6 +83,37 @@ export class AppointmentFormComponent implements OnInit {
 
 
   async onSave() {
-    
+    if (this.customForm.invalid) {
+      Dialog.show('Debes ingresar los campos obligatorios', Dialogtype.warning);
+      return;
+    }
+
+    const obj = this.customForm.getRawValue();
+
+    const date = this.customForm.get('datetime')?.value as Date;
+    const hour = this.customForm.get('time')?.value as Date;
+
+    const dateToSave = new Date(
+      date.getFullYear(), // Año de `date`
+      date.getMonth(),    // Mes de `date` (0-11)
+      date.getDate(),     // Día de `date`
+      hour.getHours(),    // Hora de `hour`
+      hour.getMinutes(),  // Minutos de `hour`
+      hour.getSeconds()   // Segundos de `hour`
+    );
+
+    obj.datetime = dateToSave;
+
+    if (this.isEditable) {
+      await firstValueFrom(this.appointmentService.update(obj, this.id));
+    } else {
+
+      await firstValueFrom(this.appointmentService.create(obj));
+    }
+
+    Dialog.show('Operación realizada exitosamente.', Dialogtype.success);
+
+    this.activeOffcanvas.dismiss('Closed');
   }
+
 }
