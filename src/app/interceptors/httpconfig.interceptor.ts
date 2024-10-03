@@ -13,6 +13,7 @@ import { map, catchError, finalize } from 'rxjs/operators';
 import Dialogtype, { Dialog } from '../libs/dialog.lib';
 import { Router } from '@angular/router';
 import { LoaderService } from '../services/loader.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
     constructor(
         private loaderService: LoaderService,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -50,6 +52,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
 
 
+        if (!request.url.includes('auth') && !request.url.includes('refresh')){
+            const tokenResponse = this.authService.readToken();
+            if(tokenResponse.access){
+                request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${tokenResponse.access}`) });
+            }
+        }
+
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
@@ -64,32 +73,34 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 data = {
                     reason: JSON.stringify(error.error),
                     status: error.status,
+                    detail: error.error.detail[0],
                     message: error && error.error && error.error.data ? error.error.data.error : error.message,
                     exceptionMessage: error && error.error ? error.error.exceptionMessage : error.message,
                     exceptionType: error && error.error ? error.error.exceptionType : null
                 };
 
-                if (data["status"] != "" && data["status"] == "500") {
+                if (error.status === 500) {
 
                     this.loaderService.hide();
                     Dialog.show('Ha ocurrido un error con el servicio', Dialogtype.error);
-                    return throwError('error-->>>' + error);
+                    return throwError(() => new Error(data));
 
                 }
-                else if (data["status"] != "" && data["status"] == "401") {
+                else if (error.status === 401) {
                     this.loaderService.hide();
-                    this.router.navigate(['/']);
-                    return throwError('error-->>>' + error);
+                    return this.authService.handle401Error(request, next);
                 }
                 else {
                     this.loaderService.hide();
-                    if (data.reason) {
+                    if (data.detail) {
+                        Dialog.show(data.detail, Dialogtype.error);
+                    }else if (data.reason) {
                         Dialog.show(data.reason, Dialogtype.warning);
                     } else {
                         Dialog.show(data.message, Dialogtype.warning);
                     }
 
-                    return throwError('error-->>>' + error);
+                    return throwError(() => new Error(data));
                 }
 
             }),

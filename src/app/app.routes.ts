@@ -6,6 +6,7 @@ import { MedicalRecordsComponent } from './pages/medical-records/medical-records
 import { MedicineInventoryComponent } from './pages/medicine-inventory/medicine-inventory.component';
 import { BillingComponent } from './pages/billing/billing.component';
 import { AppointmentComponent } from './pages/appointment/appointment.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -14,26 +15,32 @@ export const routes: Routes = [
     },
     {
         path: 'pacientes',
-        component: PatientsComponent
+        component: PatientsComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'citas',
-        component: AppointmentComponent
+        component: AppointmentComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'facturas',
-        component: BillingComponent
+        component: BillingComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'inventario-medicamentos',
-        component: MedicineInventoryComponent
+        component: MedicineInventoryComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'historia-clinica',
-        component: MedicalRecordsComponent
+        component: MedicalRecordsComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'empleados',
-        component: EmployeesComponent
+        component: EmployeesComponent,
+        canActivate: [authGuard]
     },
 ];
