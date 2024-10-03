@@ -17,7 +17,8 @@ export class FilterPipe implements PipeTransform {
       // Itera sobre cada propiedad del objeto
       return Object.keys(item).some(key => {
         // Verifica si el valor de la propiedad contiene el término de búsqueda
-        return item[key].toString().toLowerCase().includes(normalizedSearchTerm);
+        if(item[key])
+          return item[key].toString().toLowerCase().includes(normalizedSearchTerm);
       });
     });
   }
