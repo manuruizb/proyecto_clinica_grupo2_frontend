@@ -1,3 +1,20 @@
+Instalacion Frontend
+
+1.descarga e instala version LTS de node.js link: [text](https://nodejs.org/en)
+
+2.Instala angula en la terminal (npm i @angular/cli@18.2.6)
+
+3.Dentro del a campeta del proyecto ejecuta (npm install), para instalar dependecias.
+
+4.para correr el proyecto ejecuta (ng serve)
+
+
+
+
+
+
+
+
 # ClinicaApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
