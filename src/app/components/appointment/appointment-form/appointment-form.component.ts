@@ -89,9 +89,22 @@ export class AppointmentFormComponent implements OnInit {
     }
 
     const obj = this.customForm.getRawValue();
+    // Añadi para asegurar que lo que llega al from es de tipo fecha
+    let date = this.customForm.get('datetime')?.value as Date;
+    let hour = this.customForm.get('time')?.value as Date;
 
-    const date = this.customForm.get('datetime')?.value as Date;
-    const hour = this.customForm.get('time')?.value as Date;
+    if (!(date instanceof Date)) {
+      date = new Date(date);  // Convierte la fecha si es necesario
+    }
+  
+    if (!(hour instanceof Date)) {
+      hour = new Date(hour);  // Convierte la hora si es necesario
+    }
+
+    if (isNaN(date.getTime()) || isNaN(hour.getTime())) {
+      Dialog.show('Fecha u hora inválida.', Dialogtype.warning);
+      return;
+    }
 
     const dateToSave = new Date(
       date.getFullYear(), // Año de `date`

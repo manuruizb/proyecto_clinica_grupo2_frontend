@@ -34,7 +34,6 @@ export class AppointmentComponent implements OnInit {
   itemsPerPage: number = 5;
   totalItems: number = 0;
   currentPage: number = 1;
-
   searcherText: string = '';
 
   constructor(private appointmentService: AppointmentService) { }
