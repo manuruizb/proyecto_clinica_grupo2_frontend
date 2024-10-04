@@ -1,0 +1,37 @@
+<div class="offcanvas-header">
+    <h4 class="offcanvas-title text-light">Información</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<div class="offcanvas-body">
+    
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>ID:</strong></label>{{data.id}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Paciente:</strong></label>{{data.patient.firstName + ' ' + data.patient.lastName}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Profesional:</strong></label>{{data.employee.firstName + ' ' + data.employee.lastName}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Fecha:</strong></label>{{data.datetime | date: 'dd-MM-YYYY HH:mm a'}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Motivo consulta:</strong></label>{{data.reason}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Estado:</strong></label>{{data.status}}
+        </div>
+    </div>
+</div>

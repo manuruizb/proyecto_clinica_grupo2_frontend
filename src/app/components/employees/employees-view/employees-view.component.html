@@ -1,0 +1,52 @@
+<div class="offcanvas-header">
+    <h4 class="offcanvas-title text-light">Información</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<div class="offcanvas-body">
+    
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>ID:</strong></label>{{data.id}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Nombres:</strong></label>{{data.firstName}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Apellidos:</strong></label>{{data.lastName}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Correo:</strong></label>{{data.email}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Celular:</strong></label>{{data.phone}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Fecha Nacimiento:</strong></label>{{data.birthdate}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Dirección:</strong></label>{{data.address}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Rol:</strong></label>{{data.rol}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>UserName:</strong></label>{{data.username}}
+        </div>
+    </div>
+</div>
