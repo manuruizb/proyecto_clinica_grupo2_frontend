@@ -1,0 +1,42 @@
+<div class="offcanvas-header">
+    <h4 class="offcanvas-title text-light">Información</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeOffcanvas.dismiss('Cross click')"></button>
+</div>
+<div class="offcanvas-body">
+    
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>ID:</strong></label>{{data.id}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Paciente:</strong></label>{{data.patient.firstName + ' ' + data.patient.lastName}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Historia clínica:</strong></label>{{data.medicalRecords.dateCreated}} {{data.medicalRecords.nameAppointment}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Fecha:</strong></label>{{data.date | date: 'dd-MM-YYYY HH:mm a'}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Total a pagar:</strong></label>{{data.totalAmount}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Detalles:</strong></label>{{data.details}}
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 ps-4 text-light">
+            <label class="me-2 "><strong>Estado de pago:</strong></label>{{data.paymentStatus}}
+        </div>
+    </div>
+</div>
