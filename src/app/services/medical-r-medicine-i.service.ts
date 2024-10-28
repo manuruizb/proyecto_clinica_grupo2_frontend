@@ -16,6 +16,14 @@ export class MedicalRMedicineIService {
     return this.http.get<MedicalRMedicineI[]>(this.urlApi);
   }
 
+  getListByIdMedicalRecords(id: number) {
+    return this.http.get<MedicalRMedicineI[]>(this.urlApi, {
+      params: {
+        'idMedicalRecords': id
+      }
+    });
+  }
+
   create(obj: MedicalRMedicineI) {
     return this.http.post<MedicalRMedicineI>(this.urlApi, obj);
   }

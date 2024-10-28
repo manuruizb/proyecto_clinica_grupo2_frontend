@@ -45,11 +45,11 @@ export class BillingComponent {
 
   initializeDatatable() {
     this.dataValues = [
+      { id: 'id', header: 'ID Factura' },
+      { id: 'documentPatient', header: 'Documento' },
       { id: 'patientName', header: 'Paciente' },
-      { id: 'dateMedicalRecords', header: 'Historia clínica', date: true},
+      { id: 'dateMedicalRecords', header: 'Fecha cita', date: true, hour: true},
       { id: 'typeAppointment', header: 'Tipo cita' },
-      { id: 'date', header: 'Fecha', date: true},
-      { id: 'date', header: 'Hora', hour: true},
       { id: 'paymentStatus', header: 'Estado de pago' },
       { header: '', template: this.actionsTemplate }
     ];
@@ -64,6 +64,7 @@ export class BillingComponent {
         patientName: item.patient.firstName + ' ' + item.patient.lastName,
         dateMedicalRecords: item.medicalRecords.dateCreated,
         typeAppointment: item.medicalRecords.nameAppointment,
+        documentPatient: item.patient.Cedula,
       }
     });
     this.totalItems = this.JSONdata.length;

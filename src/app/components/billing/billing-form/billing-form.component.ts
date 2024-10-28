@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
 import { Patients } from '../../../models/patients-model';
 import { PatientsService } from '../../../services/patients.service';
+import { MedicalRMedicineIService } from '../../../services/medical-r-medicine-i.service';
 
 @Component({
   selector: 'app-billing-form',
@@ -26,7 +27,7 @@ import { PatientsService } from '../../../services/patients.service';
   templateUrl: './billing-form.component.html',
   styleUrl: './billing-form.component.scss'
 })
-export class BillingFormComponent implements OnInit{
+export class BillingFormComponent implements OnInit {
 
   activeOffcanvas = inject(NgbActiveOffcanvas);
   @Input() isEditable: boolean = false;
@@ -49,7 +50,11 @@ export class BillingFormComponent implements OnInit{
     paymentStatus: new FormControl('', Validators.required)
   });
 
-  constructor(private billingService: BillingService, private patientsService: PatientsService, private medicalRecordsService: MedicalRecordsService) {
+  constructor(
+    private billingService: BillingService,
+    private patientsService: PatientsService,
+    private medicalRecordsService: MedicalRecordsService,
+  private medicalRMedicineIService: MedicalRMedicineIService) {
     this.bsConfig = Object.assign({}, { minDate: new Date(), dateInputFormat: 'YYYY-MM-DD' });
   }
 
@@ -80,7 +85,26 @@ export class BillingFormComponent implements OnInit{
 
     let element = evt.target as HTMLSelectElement;
 
-    this.medicalRecordsList = await firstValueFrom(this.medicalRecordsService.getListByPatientId(parseInt(element.value)));
+    if (element.value !== '') {
+      this.medicalRecordsList = await firstValueFrom(this.medicalRecordsService.getListByPatientId(parseInt(element.value)));
+    } else {
+      this.medicalRecordsList = [];
+    }
+
+  }
+
+  async getMedicine(evt: Event) {
+    let element = evt.target as HTMLSelectElement;
+
+    if(element.value !== ''){
+      const medicineList = await firstValueFrom(this.medicalRMedicineIService.getListByIdMedicalRecords(parseInt(element.value)));
+      
+    
+    }else{
+      
+    }
+   
+
   }
 
   async onSave() {
@@ -97,7 +121,7 @@ export class BillingFormComponent implements OnInit{
     if (!(date instanceof Date)) {
       date = new Date(date);  // Convierte la fecha si es necesario
     }
-  
+
     if (!(hour instanceof Date)) {
       hour = new Date(hour);  // Convierte la hora si es necesario
     }

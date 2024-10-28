@@ -15,4 +15,5 @@ export interface Billing{
     patientName: string;
     dateMedicalRecords: Date;
     typeAppointment: string;
+    documentPatient: string;
 }

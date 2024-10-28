@@ -11,7 +11,7 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <select class="form__input" formControlName="idPatient" (change)="getMedicalRecords($event)">
+                    <select class="form__input" formControlName="idPatients" (change)="getMedicalRecords($event)">
                         <option value="">Seleccione el paciente</option>
                         @for (item of patientList; track $index) {
                             <option [value]="item.id">{{item.firstName}} {{item.lastName}}</option>
@@ -26,10 +26,10 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <select class="form__input" formControlName="idMedicalRecords">
+                    <select class="form__input" formControlName="idMedicalRecords" (change)="getMedicine($event)">
                         <option value="">Seleccione la historia clínica</option>
                         @for (item of medicalRecordsList; track $index) {
-                            <option [value]="item.id">{{item.employeeName}} - {{item.dateCreated}}</option>
+                            <option [value]="item.id">{{item.employee.firstName}} {{item.employee.lastName}} - {{item.dateCreated | date: 'dd-MM-YYYY HH:mm'}}</option>
                         }
                     </select>
                 </div>
@@ -41,18 +41,7 @@
                     <label>
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </label>
-                    <input type="text" class="form__input" formControlName="date" placeholder="Fecha cita"
-                        bsDatepicker [bsConfig]="bsConfig">
-                </div>
-            </div>
-        </div>
-        <div class="row mb-1">
-            <div class="col-12 ps-4 text-light">
-                <div class="form__field">
-                    <label>
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </label>
-                    <input type="text" class="form__input" formControlName="totalAmount" placeholder="Total a pagar" (keypress)="helpers.onlyNumbers($event)">
+                    <input type="text" class="form__input" formControlName="totalAmount" placeholder="Total a pagar" readonly>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import { firstValueFrom } from 'rxjs';
 import Dialogtype, { Dialog } from '../../libs/dialog.lib';
 import { MedicalRecordsViewComponent } from '../../components/medical-records/medical-records-view/medical-records-view.component';
 import { MedicalRecordsFormComponent } from '../../components/medical-records/medical-records-form/medical-records-form.component';
+import { MedicineFormComponent } from '../../components/medical-records/medicine-form/medicine-form.component';
 
 @Component({
   selector: 'app-medical-records',
@@ -82,6 +83,11 @@ export class MedicalRecordsComponent implements OnInit{
 		const modalRef = this.offcanvasService.open(MedicalRecordsViewComponent, { position: 'end' });
     modalRef.componentInstance.data = data;
 	}
+
+  addMedicine(id: number) {
+    const modalRef = this.offcanvasService.open(MedicineFormComponent, { position: 'end'});
+    modalRef.componentInstance.id = id;
+  }
 
   openModal(isEditable: boolean, id?: number, data?: any) {
 		const modalRef = this.offcanvasService.open(MedicalRecordsFormComponent, { position: 'end' });
