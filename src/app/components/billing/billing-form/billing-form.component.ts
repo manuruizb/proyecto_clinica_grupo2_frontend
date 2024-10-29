@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -14,6 +14,7 @@ import Dialogtype, { Dialog } from '../../../libs/dialog.lib';
 import { Patients } from '../../../models/patients-model';
 import { PatientsService } from '../../../services/patients.service';
 import { MedicalRMedicineIService } from '../../../services/medical-r-medicine-i.service';
+import { MedicalRMedicineI } from '../../../models/medicalR-medicineI-model';
 
 @Component({
   selector: 'app-billing-form',
@@ -37,6 +38,9 @@ export class BillingFormComponent implements OnInit {
 
   patientList: Patients[] = [];
   medicalRecordsList: MedicalRecords[] = [];
+  medicineList: MedicalRMedicineI[] = [];
+  valueAppointment: number = 0;
+  totalAmmount: number = 0;
 
   bsConfig?: Partial<BsDatepickerConfig>;
 
@@ -44,9 +48,8 @@ export class BillingFormComponent implements OnInit {
     id: new FormControl(''),
     idPatients: new FormControl('', Validators.required),
     idMedicalRecords: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
     totalAmount: new FormControl('', Validators.required),
-    details: new FormControl('', Validators.required),
+    details: new FormControl(''),
     paymentStatus: new FormControl('', Validators.required)
   });
 
@@ -54,14 +57,15 @@ export class BillingFormComponent implements OnInit {
     private billingService: BillingService,
     private patientsService: PatientsService,
     private medicalRecordsService: MedicalRecordsService,
-  private medicalRMedicineIService: MedicalRMedicineIService) {
+    private medicalRMedicineIService: MedicalRMedicineIService,
+    private cdr: ChangeDetectorRef) {
     this.bsConfig = Object.assign({}, { minDate: new Date(), dateInputFormat: 'YYYY-MM-DD' });
   }
 
   async ngOnInit(): Promise<void> {
     if (this.isEditable) {
 
-      console.log(this.data)
+      await this.getMedicalRecords(this.data.idPatients);
 
       this.customForm.patchValue({
         idPatients: this.data.idPatients,
@@ -71,6 +75,9 @@ export class BillingFormComponent implements OnInit {
         details: this.data.details,
         paymentStatus: this.data.paymentStatus,
       });
+
+      await this.getMedicine(this.data.idMedicalRecords);
+
     }
 
 
@@ -81,29 +88,56 @@ export class BillingFormComponent implements OnInit {
     this.patientList = await firstValueFrom(this.patientsService.getList());
   }
 
-  async getMedicalRecords(evt: Event) {
+  async OnChangePatient(evt: Event) {
+    this.medicineList = [];
+    this.customForm.get('idMedicalRecords')?.setValue('');
+    this.totalAmmount = 0;
+    this.valueAppointment = 0;
 
     let element = evt.target as HTMLSelectElement;
 
     if (element.value !== '') {
-      this.medicalRecordsList = await firstValueFrom(this.medicalRecordsService.getListByPatientId(parseInt(element.value)));
+      await this.getMedicalRecords(parseInt(element.value));
     } else {
       this.medicalRecordsList = [];
     }
-
   }
 
-  async getMedicine(evt: Event) {
+  async getMedicalRecords(patientId: number) {
+    this.medicalRecordsList = await firstValueFrom(this.medicalRecordsService.getListByPatientId(patientId));
+  }
+
+  async OnChangeMedicalRecords(evt: Event) {
     let element = evt.target as HTMLSelectElement;
 
-    if(element.value !== ''){
-      const medicineList = await firstValueFrom(this.medicalRMedicineIService.getListByIdMedicalRecords(parseInt(element.value)));
-      
-    
-    }else{
-      
+    if (element.value !== '') {
+      await this.getMedicine(parseInt(element.value));
+    } else {
+      this.medicineList = [];
+      this.totalAmmount = 0;
+      this.valueAppointment = 0;
     }
-   
+  }
+
+  async getMedicine(idMedicalRecords: number) {
+
+    this.medicineList = await firstValueFrom(this.medicalRMedicineIService.getListByIdMedicalRecords(idMedicalRecords));
+
+    this.totalAmmount = 0;
+    this.valueAppointment = 0;
+
+    let valueMedicine = 0;
+
+    for (const item of this.medicineList) {
+      valueMedicine = valueMedicine + (item.medicineInventory.cost * item.amount);
+    }
+
+    const res = await firstValueFrom(this.medicalRecordsService.read(idMedicalRecords));
+
+    this.valueAppointment = parseFloat(res.typeAppointment.cost);
+    this.totalAmmount = valueMedicine + this.valueAppointment;
+
+    this.customForm.get('totalAmount')?.setValue(this.totalAmmount);
 
   }
 
@@ -114,33 +148,6 @@ export class BillingFormComponent implements OnInit {
     }
 
     const obj = this.customForm.getRawValue();
-    // Añadi para asegurar que lo que llega al from es de tipo fecha
-    let date = this.customForm.get('datetime')?.value as Date;
-    let hour = this.customForm.get('time')?.value as Date;
-
-    if (!(date instanceof Date)) {
-      date = new Date(date);  // Convierte la fecha si es necesario
-    }
-
-    if (!(hour instanceof Date)) {
-      hour = new Date(hour);  // Convierte la hora si es necesario
-    }
-
-    if (isNaN(date.getTime()) || isNaN(hour.getTime())) {
-      Dialog.show('Fecha u hora inválida.', Dialogtype.warning);
-      return;
-    }
-
-    const dateToSave = new Date(
-      date.getFullYear(), // Año de `date`
-      date.getMonth(),    // Mes de `date` (0-11)
-      date.getDate(),     // Día de `date`
-      hour.getHours(),    // Hora de `hour`
-      hour.getMinutes(),  // Minutos de `hour`
-      hour.getSeconds()   // Segundos de `hour`
-    );
-
-    obj.datetime = dateToSave;
 
     if (this.isEditable) {
       await firstValueFrom(this.billingService.update(obj, this.id));
