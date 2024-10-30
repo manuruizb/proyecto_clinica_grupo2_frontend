@@ -106,5 +106,32 @@ export class MedicalRecordsComponent implements OnInit{
     this.searcherText = searcherText;
   }
 
+  async getPDFAll() {
+
+    let blob = await firstValueFrom(this.medicalRecordsService.getPDFAll());
+    this.exportToPDF('ListaHistoriasClínicas.pdf', blob);
+  }
+
+  async getPDFById(id: number, data: MedicalRecords) {
+
+    let blob = await firstValueFrom(this.medicalRecordsService.getPDFById(id));
+    this.exportToPDF(`${data.patientName}.pdf`, blob);
+  }
+
+
+  async exportToPDF(fileName: string, blob: Blob) {
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
 
 }

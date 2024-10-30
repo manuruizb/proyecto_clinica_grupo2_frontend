@@ -103,5 +103,33 @@ export class BillingComponent {
     this.searcherText = searcherText;
   }
 
+  async getPDFAll() {
+
+    let blob = await firstValueFrom(this.billingService.getPDFAll());
+    this.exportToPDF('ListaFacturas.pdf', blob);
+  }
+
+  async getPDFById(id: number, data: Billing) {
+
+    let blob = await firstValueFrom(this.billingService.getPDFById(id));
+    this.exportToPDF(`${data.documentPatient}.pdf`, blob);
+  }
+
+
+  async exportToPDF(fileName: string, blob: Blob) {
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }
+
 
 }
